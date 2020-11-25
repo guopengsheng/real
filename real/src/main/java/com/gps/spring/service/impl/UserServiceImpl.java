@@ -14,14 +14,16 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
+
     @Override
     public List<User> login(String cardId) {
-        return null;
+        UserExample example = new UserExample();
+        example.createCriteria().andCardidEqualTo(cardId);
+        return userMapper.selectByExample(example);
     }
 
     @Override
     public Boolean register(User record) {
-        return  null;
+        return  userMapper.insertSelective(record)>0?true:false;
     }
-
 }
