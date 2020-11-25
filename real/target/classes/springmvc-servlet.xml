@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- 配置映射器,把控制器bean的name属性作为一个访问的url -->
+    <!--    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>-->
+    <!--    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>-->
+    <!--    注入控制器-->
+    <!--    <bean name="/hello.do" class="com.gps.spring.controller.IndexController"></bean>-->
+    <context:component-scan base-package="com.gps.spring.controller"></context:component-scan>
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+    <!-- 配置视图解析器 -->
+    <!-- Example: prefix="/WEB-INF/views/", suffix=".jsp", viewname="index" -> "/WEB-INF/views/index.jsp"  -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/views/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!--文件上传解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5242880"></property>
+        <property name="defaultEncoding" value="UTF-8"></property>
+    </bean>
+    <mvc:resources mapping="/js/**" location="/js/"></mvc:resources>
+</beans>
