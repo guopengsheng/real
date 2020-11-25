@@ -24,6 +24,25 @@ public class RealEstateServiceImpl implements RealEstateService {
     UserMapper userMapper;
     @Override
     public PageInfo<RealEstate> selectAll(Integer type, String likename, Integer pageNum, Integer pageSize) {
-        return null;
+        RealEstateExample example = new RealEstateExample();
+
+        if (type==0){
+            example=null;
+        }else if (type==2){
+            example.createCriteria().andCardidLike("%"+likename+"%");
+        }else if (type==1){
+            UserExample userExample = new UserExample();
+            userExample.createCriteria().andNameLike("%"+likename+"%");
+            List<User> users = userMapper.selectByExample(userExample);
+            List<String> cIds = new ArrayList<>();
+            for (User user : users) {
+                cIds.add(user.getCardid());
+            }
+            example.createCriteria().andCardidIn(cIds);
+        }
+        PageHelper.startPage(pageNum,pageSize);
+        List<RealEstate> realEstates = realEstateMapper.selectByExample(example);
+        PageInfo<RealEstate> pageInfo = new PageInfo<>(realEstates);
+        return pageInfo;
     }
 }
