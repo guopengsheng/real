@@ -8,7 +8,7 @@ import java.util.List;
 
 public class User {
     private String cardid;
-
+    private String test;
     private String name;
 
     private Integer gender;
